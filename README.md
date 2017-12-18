@@ -81,9 +81,9 @@ export default class App extends React.Component {
 Now you can start using accent colors in your app and components. There are few things you will want to try out.
 
 * [Overriding color for individual component](#overriding-color-for-individual-component)
-* [Mix colors with props](#mix-colors-with-props)
+* [Mixing colors with props](#mixing-colors-with-props)
 * [Working with `glamor`](#working-with-glamor)
-* [My component is `connect`-ed with Redux](#my-component-is-connect-ed-with-redux)
+* [My component has already `connect`-ed with Redux](#my-component-has-already-connect-ed-with-redux)
 
 ### Overriding color for individual component
 
@@ -99,7 +99,7 @@ The following example added `accent="#E81123"` to `<MyButton>` will fill it red.
 
 > Tips: You can also override accent color by adding another layer of `<PaletteProvider>`.
 
-### Mix colors with props
+### Mixing colors with props
 
 In addition to our predefined palette, you can also create new colors from props.
 
@@ -179,9 +179,9 @@ export default withPalette((palette, props) => ({
 }))(MyButton)
 ```
 
-### My component is `connect`-ed with Redux
+### My component has already `connect`-ed with Redux
 
-No worries. HOC pattern is designed to play nice with each other, like `connect` from Redux.
+No worries. HOC pattern is designed to play nice with each other, like `connect()` from Redux.
 
 ```jsx
 export default connect(state => ({
@@ -191,7 +191,7 @@ export default connect(state => ({
 }))(MyButton))
 ```
 
-> Tips: You can also pass `accent` prop from `connect` to make your accent color reactive to Redux changes.
+> Tips: You can also pass `accent` prop from `connect()` to make your accent color reactive to Redux.
 
 ## Colors
 
