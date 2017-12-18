@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "babel ./src --out-dir ./lib --source-maps",
-    "prepare": "npm run build ",
+    "prepare": "npm run build",
     "test": "jest"
   },
   "repository": {
@@ -26,6 +26,9 @@
     "url": "https://github.com/compulim/react-accent-color/issues"
   },
   "homepage": "https://github.com/compulim/react-accent-color#readme",
+  "jest": {
+    "setupFiles": ["./src/mockRequestAnimationFrame.js"]
+  },
   "peerDependencies": {
     "color": "^2.0.1",
     "react": "^16.2.0",
