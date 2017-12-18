@@ -14,9 +14,9 @@ This library is designed to play nice with [`glamor`](https://github.com/threepo
 
 ## How to use
 
-Do `npm install react-accent-color color --save`.
-
 > Alternatively, you can find our demo at [react-accent-color-testbed](https://github.com/compulim/react-accent-color-testbed) repository.
+
+Do `npm install react-accent-color color --save`.
 
 Then, in your code:
 
@@ -72,7 +72,9 @@ export default class App extends React.Component {
 }
 ```
 
-> You can set `theme` prop to `"light"` or `"dark"`.
+> See [list of accent colors](https://docs.microsoft.com/en-us/windows/uwp/design/style/color#accent-color) for your project from UWP color design article.
+
+> You can choose between `"light"` or `"dark"` theme.
 
 ## What's next?
 
