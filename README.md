@@ -74,7 +74,7 @@ export default class App extends React.Component {
 }
 ```
 
-> You can choose between `"light"` or `"dark"` theme. We prefer it "light".
+> You can choose between `"light"` or `"dark"` theme. We prefer it "light", just like [GitHub](https://github.com/desktop/desktop/issues/2557).
 
 ## What's next?
 
