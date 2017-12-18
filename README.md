@@ -18,6 +18,11 @@ Do `npm install react-accent-color color --save`.
 
 > Alternatively, you can find our demo at [react-accent-color-testbed](https://github.com/compulim/react-accent-color-testbed) repository.
 
+Then, in your code:
+
+* [Add `<PaletteProvider>` to the root of your app](#add-paletteprovider-to-the-root-of-your-app)
+* [Hoist your component using `withPalette`](#hoist-your-component-using-withpalette)
+
 ### Add `<PaletteProvider>` to the root of your app
 
 ```jsx
@@ -69,6 +74,11 @@ export default withPalette(palette => ({
 
 Now you can start using accent colors in your app and components. There are few things you will want to try out.
 
+* [Overriding color individually](#overriding-color-individually)
+* [Create styles from props](#create-styles-from-props)
+* [Working with `glamor`](#working-with-glamor)
+* [My component is `connect`-ed with Redux](#my-component-is-connect-ed-with-redux)
+
 ### Overriding color individually
 
 If you provide `accent` or `theme` props to the hoisted component, you can override the accent color provided from `<PaletteProvider>`.
@@ -83,11 +93,35 @@ The following example added `accent="#E81123"` to `<MyButton>` will fill it red.
 
 > Tips: You can also override accent color by adding another layer of `<PaletteProvider>`.
 
+### Create styles from props
+
+In addition to palette, you can also create style from props.
+
+In this example, we set the opacity of the background color by using [`color`](https://npmjs.com/package/color) and varied by passing `opacity` prop.
+
+```jsx
+import color from 'color';
+
+// ...
+
+export default withPalette((palette, props) => ({
+  fillColor: color(palette.accent).alpha(props.opacity)
+}))(MyButton)
+```
+
+And in your app:
+
+```jsx
+<PaletteProvider accent="#0078D7" theme="light">
+  <MyButton opacity={ 0.5 }>I am transparent</MyButton>
+</PaletteProvider>
+```
+
 ### Working with glamor
 
 `react-accent-color` is designed to play nice with [`glamor`](https://github.com/threepointone/glamor).
 
-Instead of using `style` props, we can use `glamor` to create CSS style when accent color updated.
+Instead of using `style` props, we can use `glamor` to create CSS style when accent color has updated.
 
 ```jsx
 import React   from 'react';
@@ -112,18 +146,18 @@ export default withPalette(palette => ({
 }))(MyButton)
 ```
 
-> For performance reason, we recommend to call `glamor`'s `css()` outside of `render()`.
-
 #### Performance with `glamor`
 
-The function passed to `withPalette` will be called when:
+For performance reason, we recommend to call `glamor`'s `css()` outside of `render()`.
+
+The factory function passed to `withPalette` will be called when:
 
 * `MyButton.props` has changed
 * `PaletteProvider.accent`/`theme` has changed
 
 This could means, every time a prop on `MyButton` has changed, we will call `glamor.css()`. If the props are updated but not leading to any visible change, it could be saved to improve performance.
 
-You can use a memoizer to call `css()` only when there are "meaningful" changes, i.e. changes that would lead to stylesheet update. In the following example, `css()` will only be called when either `palette.accent` or `props.opacity` has changed.
+You can use a memoizer to call `css()` only when there are "meaningful" changes, i.e. changes that would lead to style update. In the following example, `css()` will only be called when either `palette.accent` or `props.opacity` has changed.
 
 > For your convenience, you exported our shallow memoizer with FIFO=1, inspired by [`reselect`](https://github.com/reactjs/reselect).
 
@@ -137,30 +171,6 @@ const createCSS = memoize((accent, opacity) => css({
 export default withPalette((palette, props) => ({
   css: createCSS(palette.accent, props.opacity)
 }))(MyButton)
-```
-
-### Create styles from props
-
-In addition to palette, you can also create style from props.
-
-In this example, we set the opacity of the background color by using [`color`](https://npmjs.com/package/color) and varied by passing `opacity` prop.
-
-```jsx
-import color from 'color';
-
-// ...
-
-export default withPalette((palette, props) => ({
-  fillColor: color(palette.accent).alpha(props.opacity)
-}))(MyButton)
-```
-
-And in your app:
-
-```jsx
-<PaletteProvider accent="#0078D7" theme="light">
-  <MyButton opacity={ 0.5 }>I am transparent</MyButton>
-</PaletteProvider>
 ```
 
 ### My component is `connect`-ed with Redux
