@@ -20,35 +20,16 @@ Do `npm install react-accent-color color --save`.
 
 Then, in your code:
 
+* [Hoist colors to props in your component using `withPalette`](#hoist-colors-to-props-in-your-component-using-withpalette)
 * [Add `<PaletteProvider>` to the root of your app](#add-paletteprovider-to-the-root-of-your-app)
-* [Hoist your component using `withPalette`](#hoist-your-component-using-withpalette)
 
-### Add `<PaletteProvider>` to the root of your app
+### Hoist colors to props on your component using `withPalette`
 
-```jsx
-import React               from 'react';
-import { PaletteProvider } from 'react-prime-ui';
-
-import MyButton from './UI/MyButton';
-
-export default class App extends React.Component {
-  render() {
-    return (
-      <PaletteProvider accent="#0078D7" theme="light">
-        <MyButton>Woohoo!</MyButton>
-      </PaletteProvider>
-    )
-  }
-}
-```
-
-> You can set `theme` prop to `"light"` or `"dark"`.
-
-### Hoist your component using `withPalette`
-
-If you are familiar with Redux, you are familiar with `withPalette`.
+Like Redux `connect()`, we use [Higher-Order Components](https://reactjs.org/docs/higher-order-components.html) pattern to hoist colors to props. So you are in control of which colors should be hoisted.
 
 In this example, `accent` color is extracted from `withPalette(palette)` and passed into the component as `fillColor` prop.
+
+You can see list of colors [here](#colors).
 
 ```jsx
 import React from 'react';
@@ -68,7 +49,30 @@ export default withPalette(palette => ({
 }))(MyButton)
 ```
 
-> Tips: You can also hoist [stateless component](https://medium.com/@joshblack/stateless-components-in-react-0-14-f9798f8b992d).
+> Tips: You can also hoist on [stateless component](https://medium.com/@joshblack/stateless-components-in-react-0-14-f9798f8b992d).
+
+### Add `<PaletteProvider>` to the root of your app
+
+Select your accent color and theme, then wrap your app with `<PaletteProvider>`.
+
+```jsx
+import React               from 'react';
+import { PaletteProvider } from 'react-prime-ui';
+
+import MyButton from './UI/MyButton';
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <PaletteProvider accent="#0078D7" theme="light">
+        <MyButton>Woohoo!</MyButton>
+      </PaletteProvider>
+    )
+  }
+}
+```
+
+> You can set `theme` prop to `"light"` or `"dark"`.
 
 ## What's next?
 
@@ -187,7 +191,7 @@ export default connect(state => ({
 
 > Tips: You can also pass `accent` prop from `connect` to make your accent color reactive to Redux changes.
 
-## Styles
+## Colors
 
 We follow [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design/style/color) and exposed the following colors:
 
