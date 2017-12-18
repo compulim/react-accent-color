@@ -27,7 +27,13 @@
   },
   "homepage": "https://github.com/compulim/react-accent-color#readme",
   "jest": {
-    "setupFiles": ["./src/mockRequestAnimationFrame.js"]
+    "setupFiles": [
+      "./src/mockRequestAnimationFrame.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/lib/"
+    ]
   },
   "peerDependencies": {
     "color": "^2.0.1",
