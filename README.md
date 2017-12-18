@@ -117,9 +117,9 @@ The function passed to `withPalette` will be called when:
 
 This could means, every time a prop on `MyButton` is changed, we will call `glamor.css()`. If the props are updated frequently, it could lead to performance hit.
 
-You can memoizer to call `css()` only when there are "meaningful" changes, i.e. changes that would lead to stylesheet update. In the following example, `css()` will only be called when either `palette.accent` or `props.opacity` is changed.
+You can use a memoizer to call `css()` only when there are "meaningful" changes, i.e. changes that would lead to stylesheet update. In the following example, `css()` will only be called when either `palette.accent` or `props.opacity` is changed.
 
-> For your convenience, we implemented a `n=1` memoizer.
+> For your convenience, you can use our simple `n=1` memoizer.
 
 ```jsx
 import { memoize } from 'react-accent-color';
