@@ -10,7 +10,7 @@ Theming is tricky.
 
 We believe designers should have ultimate controls on overall design, like margin, padding, and roundness. But sometimes, they may want to delegate some customizations to web developers, like [accent color](https://support.microsoft.com/en-us/help/17144/windows-10-change-desktop-background). We made this library to make the job a little bit easier.
 
-This library is designed to play nice with [`glamor`](https://github.com/threepointone/glamor) and [`redux`](https://github.com/reactjs/redux).
+This library is designed to play nice with [`glamor`](https://github.com/threepointone/glamor) and [Redux](https://github.com/reactjs/redux).
 
 ## How to use
 
@@ -175,7 +175,7 @@ export default withPalette((palette, props) => ({
 
 ### My component is `connect`-ed with Redux
 
-No worries. HOC pattern is designed to play nice with each other, like `connect` from `redux`.
+No worries. HOC pattern is designed to play nice with each other, like `connect` from Redux.
 
 ```jsx
 export default connect(state => ({
@@ -185,7 +185,7 @@ export default connect(state => ({
 }))(MyButton))
 ```
 
-> Tips: You can also pass `accent` prop from `connect` to make your accent color available thru `redux`.
+> Tips: You can also pass `accent` prop from `connect` to make your accent color reactive to Redux changes.
 
 ## Styles
 
