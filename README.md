@@ -82,6 +82,7 @@ Now you can start using accent colors in your app and components. There are few 
 
 * [Overriding color for some components](#overriding-color-for-some-components)
 * [Mixing colors with props](#mixing-colors-with-props)
+* [Creating your color based on theme](#creating-your-color-based-on-theme)
 * [Working with `glamor`](#working-with-glamor)
 * [My component has already `connect`-ed with Redux](#my-component-has-already-connect-ed-with-redux)
 
@@ -123,7 +124,7 @@ And in your app:
 </PaletteProvider>
 ```
 
-### Creating your color with theme
+### Creating your color based on theme
 
 In addition to the color palette, you can also create your own colors using `theme` from `<PaletteProvider>`.
 
