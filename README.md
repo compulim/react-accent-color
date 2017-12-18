@@ -233,7 +233,7 @@ We follow [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design
 
 ### Foreground color
 
-Finding the right foreground color can be tricky because the fill color can be too bright for white text, and vice versa. What's more, for accessibility, it should have contrast ratio of 4.5:1.
+Finding the right foreground color can be tricky because the fill color can be too bright for white text, and vice versa. What's more, for accessibility, it should have contrast ratio of [4.5:1](http://www.w3.org/TR/WCAG20-TECHS/G18.html).
 
 We provide foreground colors from `palette.textOn` maps. For example, to get the foreground color for `listLow` color, you can get it from `palette.textOn.listLow`. For example,
 
