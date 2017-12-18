@@ -55,6 +55,8 @@ export default withPalette(palette => ({
 
 Select your accent color and theme, then wrap your app with `<PaletteProvider>`.
 
+> See [list of accent colors](https://docs.microsoft.com/en-us/windows/uwp/design/style/color#accent-color) for your project from UWP color design article.
+
 ```jsx
 import React               from 'react';
 import { PaletteProvider } from 'react-prime-ui';
@@ -71,8 +73,6 @@ export default class App extends React.Component {
   }
 }
 ```
-
-> See [list of accent colors](https://docs.microsoft.com/en-us/windows/uwp/design/style/color#accent-color) for your project from UWP color design article.
 
 > You can choose between `"light"` or `"dark"` theme.
 
