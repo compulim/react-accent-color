@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should override palette with accent props 1`] = `
+<div
+  data-accent="#999"
+/>
+`;

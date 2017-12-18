@@ -1,0 +1,49 @@
+{
+  "name": "react-accent-color",
+  "version": "0.0.1",
+  "description": "Accent color management for React components",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "files": [
+    "lib/*"
+  ],
+  "scripts": {
+    "build": "babel ./src --out-dir ./lib --source-maps",
+    "prepare": "npm run build ",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/compulim/react-accent-color.git"
+  },
+  "author": {
+    "email": "compulim@hotmail.com",
+    "name": "William Wong",
+    "url": "http://compulim.info/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/compulim/react-accent-color/issues"
+  },
+  "homepage": "https://github.com/compulim/react-accent-color#readme",
+  "peerDependencies": {
+    "color": "^2.0.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "color": "^2.0.1",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
+    "jest": "^21.2.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0"
+  }
+}
