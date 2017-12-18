@@ -1,6 +1,6 @@
-# react-accent-color
+# Accent color management for React
 
-Accent color management for React, inspired by [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design/style/color).
+Inspired by [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design/style/color).
 
 ## Introduction
 
@@ -37,9 +37,11 @@ export default class App extends React.Component {
 
 > You can set `theme` prop to `"light"` or `"dark"`.
 
-### Hoist your component using `withPalette` HOC
+### Hoist your component using `withPalette`
 
-In this example, `accent` color is extracted from palette and passed into the component as `fillColor` prop.
+If you are familiar with Redux, you are familiar with `withPalette`.
+
+In this example, `accent` color is extracted from `withPalette(palette)` and passed into the component as `fillColor` prop.
 
 ```jsx
 import React from 'react';
@@ -59,15 +61,17 @@ export default withPalette(palette => ({
 }))(MyButton)
 ```
 
+> Tips: You can also hoist [stateless component](https://medium.com/@joshblack/stateless-components-in-react-0-14-f9798f8b992d).
+
 ## What's next?
 
 Now you can start using accent colors in your app and components. There are few things you will want to try out.
 
-### Overriding color
+### Overriding color individually
 
 If you provide `accent` or `theme` props to the hoisted component, you can override the accent color provided from `<PaletteProvider>`.
 
-In the previous example, add `accent="#E81123"` to `<MyButton>` will fill it red.
+The following example added `accent="#E81123"` to `<MyButton>` will fill it red.
 
 ```jsx
 <PaletteProvider accent="#0078D7" theme="light">
@@ -81,7 +85,7 @@ In the previous example, add `accent="#E81123"` to `<MyButton>` will fill it red
 
 `react-accent-color` is designed to play nice with [`glamor`](https://github.com/threepointone/glamor).
 
-For example, in the `MyButton`, instead of using `style` props, we can use `glamor` to create CSS style.
+Instead of using `style` props, we can use `glamor` to create CSS style when accent color updated.
 
 ```jsx
 import React   from 'react';
@@ -106,20 +110,20 @@ export default withPalette(palette => ({
 }))(MyButton)
 ```
 
-> For performance reason, we recommend calling `glamor`'s `css()` outside of `render()`.
+> For performance reason, we recommend to call `glamor`'s `css()` outside of `render()`.
 
 #### Performance with `glamor`
 
 The function passed to `withPalette` will be called when:
 
-* `MyButton.props` is changed
-* `PaletteProvider.accent`/`theme` is changed
+* `MyButton.props` has changed
+* `PaletteProvider.accent`/`theme` has changed
 
-This could means, every time a prop on `MyButton` is changed, we will call `glamor.css()`. If the props are updated frequently, it could lead to performance hit.
+This could means, every time a prop on `MyButton` has changed, we will call `glamor.css()`. If the props are updated but not leading to any visible change, it could be saved to improve performance.
 
-You can use a memoizer to call `css()` only when there are "meaningful" changes, i.e. changes that would lead to stylesheet update. In the following example, `css()` will only be called when either `palette.accent` or `props.opacity` is changed.
+You can use a memoizer to call `css()` only when there are "meaningful" changes, i.e. changes that would lead to stylesheet update. In the following example, `css()` will only be called when either `palette.accent` or `props.opacity` has changed.
 
-> For your convenience, you can use our simple `n=1` memoizer.
+> For your convenience, you exported our shallow memoizer with FIFO=1, inspired by [`reselect`](https://github.com/reactjs/reselect).
 
 ```jsx
 import { memoize } from 'react-accent-color';
@@ -177,43 +181,43 @@ We follow [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design
 
 > `light` means `theme` prop is set to `"light"`, instead of `"dark"`
 
-| Color name | |
-| - | - |
-| `accentDark1` | `accentColor.darken(.2).string()` |
-| `accentDark2` | `accentColor.darken(.4).string()` |
-| `accentDark3` | `accentColor.darken(.6).string()` |
-| `accentLight1` | `accentColor.lighten(.2).string()` |
-| `accentLight2` | `accentColor.lighten(.4).string()` |
-| `accentLight3` | `accentColor.lighten(.6).string()` |
-| `background` | `light ? '#FFF' : '#000'` |
-| `foreground` | `light ? '#000' : '#FFF'` |
-| `baseLow` | `light ? 'rgba(0, 0, 0, .2)' : 'rgba(255, 255, 255, .2)'` |
-| `baseMediumLow` | `light ? 'rgba(0, 0, 0, .4)' : 'rgba(255, 255, 255, .4)'` |
-| `baseMedium` | `light ? 'rgba(0, 0, 0, .6)' : 'rgba(255, 255, 255, .6)'` |
-| `baseMediumHigh` | `light ? 'rgba(0, 0, 0, .8)' : 'rgba(255, 255, 255, .8)'` |
-| `baseHigh` | `light ? '#000' : '#FFF'` |
-| `altLow` | `light ? 'rgba(255, 255, 255, .2)' : 'rgba(0, 0, 0, .2)'` |
-| `altMediumLow` | `light ? 'rgba(255, 255, 255, .4)' : 'rgba(0, 0, 0, .4)'` |
-| `altMedium` | `light ? 'rgba(255, 255, 255, .6)' : 'rgba(0, 0, 0, .6)'` |
-| `altMediumHigh` | `light ? 'rgba(255, 255, 255, .8)' : 'rgba(0, 0, 0, .8)'` |
-| `altHigh` | `light ? '#FFF' : '#000'` |
-| `listLow` | `light ? 'rgba(0, 0, 0, .1)' : 'rgba(255, 255, 255, .1)'` |
-| `listMedium` | `light ? 'rgba(0, 0, 0, .2)' : 'rgba(255, 255, 255, .2)'` |
-| `listAccentLow` | `accentColor.fade(.4)` |
-| `listAccentMedium` | `accentColor.fade(.6)` |
-| `listAccentHigh` | `accentColor.fade(.7)` |
-| `chromeLow` | `light ? '#F2F2F2' : '#171717'` |
-| `chromeMediumLow` | `light ? '#F2F2F2' : '#2B2B2B'` |
-| `chromeMedium` | `light ? '#E6E6E6' : '#1F1F1F'` |
-| `chromeHigh` | `light ? '#CCC' : '#767676'` |
-| `chromeAltLow` | `light ? '#171717' : '#F2F2F2'` |
-| `chromeDisabledLow` | `light ? '#7A7A7A' : '#858585'` |
-| `chromeDisabledHigh` | `light ? '#CCC' : '#333'` |
-| `chromeBlackLow` | `'rgba(0, 0, 0, .2)'` |
-| `chromeBlackMediumLow` | `'rgba(0, 0, 0, .4)'` |
-| `chromeBlackMedium` | `'rgba(0, 0, 0, .8)'` |
-| `chromeBlackHigh` | `'#000'` |
-| `chromeWhite` | `'#FFF'` |
+| Color name | Light | Dark |
+| - | - | - |
+| `accentDark1` | `{ accentColor.darken(.2) }` | (Same as light) |
+| `accentDark2` | `{ accentColor.darken(.4) }` | (Same as light) |
+| `accentDark3` | `{ accentColor.darken(.6) }` | (Same as light) |
+| `accentLight1` | `{ accentColor.lighten(.2) }` | (Same as light) |
+| `accentLight2` | `{ accentColor.lighten(.4) }` | (Same as light) |
+| `accentLight3` | `{ accentColor.lighten(.6) }` | (Same as light) |
+| `background` | `#FFF` | `#000` |
+| `foreground` | `#000` | `#FFF` |
+| `baseLow` | `rgba(0, 0, 0, .2)` | `rgba(255, 255, 255, .2)` |
+| `baseMediumLow` | `rgba(0, 0, 0, .4)` | `rgba(255, 255, 255, .4)` |
+| `baseMedium` | `rgba(0, 0, 0, .6)` | `rgba(255, 255, 255, .6)` |
+| `baseMediumHigh` | `rgba(0, 0, 0, .8)` | `rgba(255, 255, 255, .8)` |
+| `baseHigh` | `#000` | `#FFF` |
+| `altLow` | `rgba(255, 255, 255, .2)` | `rgba(0, 0, 0, .2)` |
+| `altMediumLow` | `rgba(255, 255, 255, .4)` | `rgba(0, 0, 0, .4)` |
+| `altMedium` | `rgba(255, 255, 255, .6)` | `rgba(0, 0, 0, .6)` |
+| `altMediumHigh` | `rgba(255, 255, 255, .8)` | `rgba(0, 0, 0, .8)` |
+| `altHigh` | `#FFF` | `#000` |
+| `listLow` | `rgba(0, 0, 0, .1)` | `rgba(255, 255, 255, .1)` |
+| `listMedium` | `rgba(0, 0, 0, .2)` | `rgba(255, 255, 255, .2)` |
+| `listAccentLow` | `{ accentColor.fade(.4) }` | (Same as light) |
+| `listAccentMedium` | `{ accentColor.fade(.6) }` | (Same as light) |
+| `listAccentHigh` | `{ accentColor.fade(.7) }` | (Same as light) |
+| `chromeLow` | `#F2F2F2` | `#171717` |
+| `chromeMediumLow` | `#F2F2F2` | `#2B2B2B` |
+| `chromeMedium` | `#E6E6E6` | `#1F1F1F` |
+| `chromeHigh` | `#CCC` | `#767676` |
+| `chromeAltLow` | `#171717` | `#F2F2F2` |
+| `chromeDisabledLow` | `#7A7A7A` | `#858585` |
+| `chromeDisabledHigh` | `#CCC` | `#333` |
+| `chromeBlackLow` | `rgba(0, 0, 0, .2)` | (Same as light) |
+| `chromeBlackMediumLow` | `rgba(0, 0, 0, .4)` | (Same as light) |
+| `chromeBlackMedium` | `rgba(0, 0, 0, .8)` | (Same as light) |
+| `chromeBlackHigh` | `#000` | (Same as light) |
+| `chromeWhite` | `#FFF` | (Same as light) |
 
 ### Foreground color
 
