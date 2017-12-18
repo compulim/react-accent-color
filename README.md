@@ -17,9 +17,9 @@ Do `npm install react-accent-color color --save`.
 ### Add `<PaletteProvider>` to the root of your app
 
 ```jsx
-import React from 'react';
+import React               from 'react';
+import { PaletteProvider } from 'react-prime-ui';
 
-import { PaletteProvider, withPalette } from 'react-prime-ui';
 import MyButton from './UI/MyButton';
 
 export default class App extends React.Component {
@@ -40,6 +40,8 @@ export default class App extends React.Component {
 In this example, `accent` color is extracted from palette and passed into the component as `fillColor` prop.
 
 ```jsx
+import React from 'react';
+
 class MyButton extends React.Component {
   render() {
     return (
@@ -52,14 +54,14 @@ class MyButton extends React.Component {
 
 export default withPalette(palette => ({
   fillColor: palette.accent
-}))(MyButton);
+}))(MyButton)
 ```
 
 ### Overriding color
 
 If you provide `accent` or `theme` props to the hoisted component, you can override the accent color provided from `<PaletteProvider>`.
 
-In the previous example, add `accent` props to `<MyButton>`.
+In the previous example, add `accent="#E81123"` to `<MyButton>` will fill it red.
 
 ```jsx
 <PaletteProvider accent="#0078D7" theme="light">
@@ -67,7 +69,7 @@ In the previous example, add `accent` props to `<MyButton>`.
 </PaletteProvider>
 ```
 
-> You can also override accent color by adding another layer of `<PaletteProvider>`.
+> Tips: You can also override accent color by adding another layer of `<PaletteProvider>`.
 
 ### Working with glamor
 
@@ -76,11 +78,12 @@ In the previous example, add `accent` props to `<MyButton>`.
 For example, in the `MyButton`, instead of using `style` props, we can use `glamor` to create CSS style.
 
 ```jsx
+import React   from 'react';
 import { css } from 'glamor';
 
 const createCSS = palette => css({
   backgroundColor: palette.backgroundColor
-})
+});
 
 class MyButton extends React.Component {
   render() {
@@ -94,7 +97,7 @@ class MyButton extends React.Component {
 
 export default withPalette(palette => ({
   css: createCSS(palette)
-}))(MyButton);
+}))(MyButton)
 ```
 
 ### Create styles from props
@@ -109,7 +112,7 @@ import color from 'color';
 // ...
 
 export default withPalette((palette, props) => ({
-  buttonColor: color(palette.accent).alpha(props.opacity)
+  fillColor: color(palette.accent).alpha(props.opacity)
 }))(MyButton)
 ```
 
@@ -133,7 +136,7 @@ export default withPalette(palette => ({
 }))(MyButton))
 ```
 
-> You can also pass `accent` prop from `connect` to make your accent color available thru `redux`.
+> Tips: You can also pass `accent` prop from `connect` to make your accent color available thru `redux`.
 
 ## Styles
 
@@ -187,9 +190,9 @@ We provide foreground colors from `palette.textOn` maps. For example, to get the
 
 ```js
 export default withPalette(palette => ({
-  backgroundColor: palette.listLow,
-  color          : palette.textOn.listLow
-}))(MyButton);
+  fillColor: palette.listLow,
+  color    : palette.textOn.listLow
+}))(MyButton)
 ```
 
 The foreground color is by calculating if the fill color is "dark", using the following algorithm (inspired from UWP):
