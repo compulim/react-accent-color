@@ -13,10 +13,11 @@ const Dummy = props => <div data-accent={ props.accent } />;
 Dummy.displayName = 'Dummy';
 
 it('should wrap component with CSS factories', () => {
-  const WrappedDummy = withPalette((palette, props) => ({
-    accent             : palette.accent,
-    theme              : palette.theme,
-    hoistedFourFiveSize: props.fourFiveSix
+  const WrappedDummy = withPalette(({ accent, palette, theme }, props) => ({
+    accent,
+    background: palette.background,
+    hoistedFourFiveSix: props.fourFiveSix,
+    theme
   }))(Dummy);
 
   const provider = mount(
@@ -26,9 +27,11 @@ it('should wrap component with CSS factories', () => {
   );
 
   expect(provider.find('Dummy').props().oneTwoThree).toBe('123');
+  expect(provider.find('Dummy').props().fourFiveSix).toBe('456');
   expect(provider.find('Dummy').props().accent).toBe('#F00');
+  expect(provider.find('Dummy').props().background).toBe('#FFF');
   expect(provider.find('Dummy').props().theme).toBe('light');
-  expect(provider.find('Dummy').props().hoistedFourFiveSize).toBe('456');
+  expect(provider.find('Dummy').props().hoistedFourFiveSix).toBe('456');
 });
 
 it('should refresh with accent color change', () => {
@@ -82,10 +85,14 @@ it('should not refresh with no color change', () => {
 
 it('should override palette with accent props', () => {
   const paletteFactory = jest.fn();
-  const WrappedDummy = withPalette((palette, props) => {
+  const WrappedDummy = withPalette(({ accent, palette, theme }, props) => {
     paletteFactory();
 
-    return { myAccent: palette.accent + palette.theme };
+    return {
+      accent,
+      background: palette.background,
+      theme
+    };
   })(Dummy);
 
   const provider = mount(
@@ -95,7 +102,9 @@ it('should override palette with accent props', () => {
   );
 
   expect(provider.getDOMNode()).toMatchSnapshot();
-  expect(provider.find('Dummy').props().myAccent).toBe('#999dark');
+  expect(provider.find('Dummy').props().accent).toBe('#999');
+  expect(provider.find('Dummy').props().background).toBe('#000');
+  expect(provider.find('Dummy').props().theme).toBe('dark');
 
   provider.setProps({ accent: '#FFF' });
 
@@ -110,15 +119,19 @@ it('should override palette with accent props', () => {
   provider.setProps({ theme: 'light' });
 
   expect(paletteFactory).toHaveBeenCalledTimes(2);
-  expect(provider.find('Dummy').props().myAccent).toBe('#999light');
+  expect(provider.find('Dummy').props().accent).toBe('#999');
+  expect(provider.find('Dummy').props().background).toBe('#FFF');
+  expect(provider.find('Dummy').props().theme).toBe('light');
 });
 
 it('should recalculate palette on props change', () => {
   const paletteFactory = jest.fn();
-  const WrappedDummy = withPalette((palette, props) => {
+  const WrappedDummy = withPalette(({ palette }, props) => {
     paletteFactory();
 
-    return { myAccent: palette.accent + (props.dummy || '') };
+    return {
+      myAccent: palette.accent + (props.dummy || '')
+    };
   })(Dummy);
 
   const wrappedDummy = mount(<WrappedDummy accent="#999" />);
@@ -133,10 +146,11 @@ it('should recalculate palette on props change', () => {
 });
 
 it('should work without <PaletteProvider>', () => {
-  const WrappedDummy = withPalette((palette, props) => ({
-    accent             : palette.accent,
-    theme              : palette.theme,
-    hoistedFourFiveSize: props.fourFiveSix
+  const WrappedDummy = withPalette(({ accent, palette, theme }, props) => ({
+    accent,
+    background        : palette.background,
+    hoistedFourFiveSix: props.fourFiveSix,
+    theme
   }))(Dummy);
 
   const wrappedDummy = mount(
@@ -144,7 +158,9 @@ it('should work without <PaletteProvider>', () => {
   );
 
   expect(wrappedDummy.find('Dummy').props().oneTwoThree).toBe('123');
+  expect(wrappedDummy.find('Dummy').props().fourFiveSix).toBe('456');
   expect(wrappedDummy.find('Dummy').props().accent).toBe('#F00');
+  expect(wrappedDummy.find('Dummy').props().background).toBe('#000');
   expect(wrappedDummy.find('Dummy').props().theme).toBe('dark');
-  expect(wrappedDummy.find('Dummy').props().hoistedFourFiveSize).toBe('456');
+  expect(wrappedDummy.find('Dummy').props().hoistedFourFiveSix).toBe('456');
 });

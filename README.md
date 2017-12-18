@@ -27,9 +27,9 @@ Then, in your code:
 
 Like Redux `connect()`, we use [Higher-Order Components](https://reactjs.org/docs/higher-order-components.html) pattern to hoist colors to props. So you are in control of which colors should be hoisted.
 
-In this example, `accent` color is extracted from `withPalette(palette)` and passed into the component as `fillColor` prop.
+In this example, `accent` color is extracted from `withPalette()` and passed into the component as `fillColor` prop.
 
-You can see list of colors [here](#colors).
+You can see list of colors in the palette [here](#colors).
 
 ```jsx
 import React from 'react';
@@ -44,7 +44,7 @@ class MyButton extends React.Component {
   }
 }
 
-export default withPalette(palette => ({
+export default withPalette({ palette } => ({
   fillColor: palette.accent
 }))(MyButton)
 ```
@@ -110,7 +110,7 @@ import color from 'color';
 
 // ...
 
-export default withPalette((palette, props) => ({
+export default withPalette(({ palette }, props) => ({
   fillColor: color(palette.accent).alpha(props.opacity)
 }))(MyButton)
 ```
@@ -121,6 +121,16 @@ And in your app:
 <PaletteProvider accent="#0078D7" theme="light">
   <MyButton opacity={ 0.5 }>I am transparent</MyButton>
 </PaletteProvider>
+```
+
+### Creating your color with theme
+
+In addition to the color palette, you can also create your own colors using `theme` from `<PaletteProvider>`.
+
+```jsx
+export defasult withPalette(({ palette, theme }, props) => ({
+  fillColor: theme === 'light' ? palette.accentDark1 : palette.accentLight1
+}))(MyButton)
 ```
 
 ### Working with glamor
@@ -147,7 +157,7 @@ class MyButton extends React.Component {
   }
 }
 
-export default withPalette(palette => ({
+export default withPalette({ palette } => ({
   css: createCSS(palette)
 }))(MyButton)
 ```
@@ -174,7 +184,7 @@ const createCSS = memoize((accent, opacity) => css({
   backgroundColor: color(accent).alpha(opacity)
 }));
 
-export default withPalette((palette, props) => ({
+export default withPalette(({ palette }, props) => ({
   css: createCSS(palette.accent, props.opacity)
 }))(MyButton)
 ```
@@ -186,7 +196,7 @@ No worries. HOC pattern is designed to play nice with each other, like `connect(
 ```jsx
 export default connect(state => ({
   name: state.userProfile.name
-}))(withPalette(palette => ({
+}))(withPalette({ palette } => ({
   fillColor: palette.accent
 }))(MyButton))
 ```
@@ -234,6 +244,9 @@ We follow [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design
 | `chromeBlackMedium` | `rgba(0, 0, 0, .8)` | (Same as light) |
 | `chromeBlackHigh` | `#000` | (Same as light) |
 | `chromeWhite` | `#FFF` | (Same as light) |
+| `primaryText` | (Same as `baseHigh`) | (Same as `baseHigh`) |
+| `secondaryText` | (Same as `baseMedium`) | (Same as `baseMedium`) |
+| `disabledUI` | (Same as `baseMediumLow`) | (Same as `baseMediumLow`) |
 
 ### Foreground color
 
@@ -242,7 +255,7 @@ Finding the right foreground color can be tricky because the fill color can be t
 We provide foreground colors from `palette.textOn` maps. For example, to get the foreground color for `listLow` color, you can get it from `palette.textOn.listLow`. For example,
 
 ```js
-export default withPalette(palette => ({
+export default withPalette({ palette } => ({
   fillColor: palette.listLow,
   color    : palette.textOn.listLow
 }))(MyButton)

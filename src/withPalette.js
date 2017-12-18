@@ -10,18 +10,6 @@ import PaletteProvider from './PaletteProvider';
 const DEFAULT_ACCENT = '#0078D7';
 const DEFAULT_THEME  = 'light';
 
-function getAccent(props, subject) {
-  const subjectValue = subject && subject.getValue();
-
-  return props.accent || (subjectValue && subjectValue.accent) || DEFAULT_ACCENT;
-}
-
-function getTheme(props, subject) {
-  const subjectValue = subject && subject.getValue();
-
-  return props.theme || (subjectValue && subjectValue.theme) || DEFAULT_THEME;
-}
-
 function propsEqual(x, y) {
   const keys = Object.keys(x);
 
@@ -31,7 +19,7 @@ function propsEqual(x, y) {
   );
 }
 
-export default function withPalette(propsFactories) {
+export default function withPalette(propsFactory) {
   return WrappedComponent => {
     const WithPalette = class extends React.Component {
       constructor(props, context) {
@@ -39,7 +27,7 @@ export default function withPalette(propsFactories) {
 
         const subject = context.palette && context.palette.getValue();
 
-        this.createPalette = memoize(createPalette);
+        this.createAndMemoizePalette = memoize(createPalette);
         this.state = this.createState(props, subject, true);
       }
 
@@ -75,14 +63,13 @@ export default function withPalette(propsFactories) {
       }
 
       createState(props, subjectValue = {}, propsChanged = false) {
-        const nextPalette = this.createPalette(
-          props.accent || subjectValue.accent || DEFAULT_ACCENT,
-          props.theme || subjectValue.theme || DEFAULT_THEME
-        );
+        const accent      = props.accent || subjectValue.accent || DEFAULT_ACCENT;
+        const theme       = props.theme  || subjectValue.theme  || DEFAULT_THEME;
+        const nextPalette = this.createAndMemoizePalette(accent, theme);
 
         if (propsChanged || nextPalette !== this.state.palette) {
           return {
-            cssProps: propsFactories && propsFactories(nextPalette, props),
+            cssProps: propsFactory && propsFactory({ accent, palette: nextPalette, theme }, props),
             palette : nextPalette
           };
         } else {

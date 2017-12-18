@@ -10,7 +10,6 @@ export default function createPalette(accent, theme) {
 
   const palette = {
     accent,
-    theme,
 
     accentDark1 : accentColor.darken(.2).string(),
     accentDark2 : accentColor.darken(.4).string(),
@@ -54,9 +53,7 @@ export default function createPalette(accent, theme) {
   };
 
   palette.textOn = Object.keys(palette).reduce((textPalettes, name) => {
-    if (name !== 'theme') {
-      textPalettes[name] = isDark(color(palette[name])) ? 'white' : 'black';
-    }
+    textPalettes[name] = isDark(color(palette[name])) ? 'white' : 'black';
 
     return textPalettes;
   }, {});
@@ -64,7 +61,6 @@ export default function createPalette(accent, theme) {
   palette.primaryText   = palette.baseHigh;
   palette.secondaryText = palette.baseMedium;
   palette.disabledUI    = palette.baseMediumLow;
-  palette.contentArea   = palette.contentArea;
 
   return palette;
 }
