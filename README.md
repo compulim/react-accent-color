@@ -20,7 +20,7 @@ Do `npm install react-accent-color color --save`.
 
 Then, in your code:
 
-* [Hoist colors to props in your component using `withPalette()`](#hoist-colors-to-props-in-your-component-using-withpalette)
+* [Hoist colors to props on your component using `withPalette()`](#hoist-colors-to-props-on-your-component-using-withpalette)
 * [Add `<PaletteProvider>` to the root of your app](#add-paletteprovider-to-the-root-of-your-app)
 
 ### Hoist colors to props on your component using `withPalette()`
