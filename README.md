@@ -14,6 +14,8 @@ This library is designed to play nice with [`glamor`](https://github.com/threepo
 
 Do `npm install react-accent-color color --save`.
 
+> Alternatively, you can find our demo at [react-accent-color-testbed](https://github.com/compulim/react-accent-color-testbed) repository.
+
 ### Add `<PaletteProvider>` to the root of your app
 
 ```jsx
@@ -56,6 +58,10 @@ export default withPalette(palette => ({
   fillColor: palette.accent
 }))(MyButton)
 ```
+
+## What's next?
+
+Now you can start using accent colors in your app and components. There are few things you will want to try out.
 
 ### Overriding color
 
@@ -100,6 +106,33 @@ export default withPalette(palette => ({
 }))(MyButton)
 ```
 
+> For performance reason, we recommend calling `glamor`'s `css()` outside of `render()`.
+
+#### Performance with `glamor`
+
+The function passed to `withPalette` will be called when:
+
+* `MyButton.props` is changed
+* `PaletteProvider.accent`/`theme` is changed
+
+This could means, every time a prop on `MyButton` is changed, we will call `glamor.css()`. If the props are updated frequently, it could lead to performance hit.
+
+You can memoizer to call `css()` only when there are "meaningful" changes, i.e. changes that would lead to stylesheet update. In the following example, `css()` will only be called when either `palette.accent` or `props.opacity` is changed.
+
+> For your convenience, we implemented a `n=1` memoizer.
+
+```jsx
+import { memoize } from 'react-accent-color';
+
+const createCSS = memoize((accent, opacity) => css({
+  backgroundColor: color(accent).alpha(opacity)
+}));
+
+export default withPalette((palette, props) => ({
+  css: createCSS(palette.accent, props.opacity)
+}))(MyButton)
+```
+
 ### Create styles from props
 
 In addition to palette, you can also create style from props.
@@ -129,10 +162,10 @@ And in your app:
 No worries. HOC pattern is designed to play nice with each other, like `connect` from `redux`.
 
 ```jsx
-export default withPalette(palette => ({
-  fillColor: palette.accent
-}))(connect(state => ({
+export default connect(state => ({
   name: state.userProfile.name
+}))(withPalette(palette => ({
+  fillColor: palette.accent
 }))(MyButton))
 ```
 
