@@ -80,12 +80,12 @@ export default class App extends React.Component {
 
 Now you can start using accent colors in your app and components. There are few things you will want to try out.
 
-* [Overriding color for individual component](#overriding-color-for-individual-component)
+* [Overriding color for some components](#overriding-color-for-some-components)
 * [Mixing colors with props](#mixing-colors-with-props)
 * [Working with `glamor`](#working-with-glamor)
 * [My component has already `connect`-ed with Redux](#my-component-has-already-connect-ed-with-redux)
 
-### Overriding color for individual component
+### Overriding color for some components
 
 If you provide `accent` or `theme` props to the hoisted component, you can override the accent color provided from `<PaletteProvider>`.
 
