@@ -37,7 +37,7 @@ export default class App extends React.Component {
 
 ### Hoist your component using `withPalette` HOC
 
-In this example, `background` color is extracted from palette and passed into the component as `fillColor` prop.
+In this example, `accent` color is extracted from palette and passed into the component as `fillColor` prop.
 
 ```jsx
 class MyButton extends React.Component {
@@ -51,7 +51,7 @@ class MyButton extends React.Component {
 }
 
 export default withPalette(palette => ({
-  fillColor: palette.background
+  fillColor: palette.accent
 }))(MyButton);
 ```
 
@@ -109,7 +109,7 @@ import color from 'color';
 // ...
 
 export default withPalette((palette, props) => ({
-  buttonColor: color(palette.background).alpha(props.opacity)
+  buttonColor: color(palette.accent).alpha(props.opacity)
 }))(MyButton)
 ```
 
@@ -127,7 +127,7 @@ No worries. HOC pattern is designed to play nice with each other, like `connect`
 
 ```jsx
 export default withPalette(palette => ({
-  fillColor: palette.background
+  fillColor: palette.accent
 }))(connect(state => ({
   name: state.userProfile.name
 }))(MyButton))
