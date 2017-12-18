@@ -74,18 +74,18 @@ export default class App extends React.Component {
 }
 ```
 
-> You can choose between `"light"` or `"dark"` theme.
+> You can choose between `"light"` or `"dark"` theme. We prefer it "light".
 
 ## What's next?
 
 Now you can start using accent colors in your app and components. There are few things you will want to try out.
 
-* [Overriding color individually](#overriding-color-individually)
-* [Create styles from props](#create-styles-from-props)
+* [Overriding color for individual component](#overriding-color-for-individual-component)
+* [Mix colors with props](#mix-colors-with-props)
 * [Working with `glamor`](#working-with-glamor)
 * [My component is `connect`-ed with Redux](#my-component-is-connect-ed-with-redux)
 
-### Overriding color individually
+### Overriding color for individual component
 
 If you provide `accent` or `theme` props to the hoisted component, you can override the accent color provided from `<PaletteProvider>`.
 
@@ -99,11 +99,11 @@ The following example added `accent="#E81123"` to `<MyButton>` will fill it red.
 
 > Tips: You can also override accent color by adding another layer of `<PaletteProvider>`.
 
-### Create styles from props
+### Mix colors with props
 
-In addition to palette, you can also create style from props.
+In addition to our predefined palette, you can also create new colors from props.
 
-In this example, we set the opacity of the background color by using [`color`](https://npmjs.com/package/color) and varied by passing `opacity` prop.
+In this example, we set the opacity of the background color by using [`color`](https://npmjs.com/package/color) and varied by passing an `opacity` prop.
 
 ```jsx
 import color from 'color';
