@@ -197,9 +197,7 @@ export default connect(state => ({
 
 We follow [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design/style/color) and exposed the following colors:
 
-> `light` means `theme` prop is set to `"light"`, instead of `"dark"`
-
-| Color name | Light | Dark |
+| Color name | Light theme | Dark theme |
 | - | - | - |
 | `accentDark1` | `{ accentColor.darken(.2) }` | (Same as light) |
 | `accentDark2` | `{ accentColor.darken(.4) }` | (Same as light) |
