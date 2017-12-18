@@ -1,5 +1,7 @@
 # Accent color management for React
 
+[![Build Status](https://travis-ci.org/compulim/react-accent-color.svg?branch=master)](https://travis-ci.org/compulim/react-accent-color) [![npm version](https://badge.fury.io/js/react-accent-color.svg)](https://badge.fury.io/js/react-accent-color)
+
 Inspired by [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design/style/color).
 
 ## Introduction
