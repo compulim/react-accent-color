@@ -183,7 +183,14 @@ We follow [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design
 
 Finding the right foreground color can be tricky because the fill color can be too bright for white text, and vice versa. What's more, for accessibility, it should have contrast ratio of 4.5:1.
 
-We provide foreground colors from `palette.textOn` maps. For example, to get the foreground color for `listLow` color, you can get it from `palette.textOn.listLow`.
+We provide foreground colors from `palette.textOn` maps. For example, to get the foreground color for `listLow` color, you can get it from `palette.textOn.listLow`. For example,
+
+```js
+export default withPalette(palette => ({
+  backgroundColor: palette.listLow,
+  color          : palette.textOn.listLow
+}))(MyButton);
+```
 
 The foreground color is by calculating if the fill color is "dark", using the following algorithm (inspired from UWP):
 
