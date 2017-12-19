@@ -138,7 +138,7 @@ export default withPalette(({ palette, theme }, props) => ({
 
 #### Non-color customization
 
-In fact, all props from `<PaletteProvider>` are passed as first argument to your props factory. In the following example, we are passing `roundness` of `0.5` to the props factory thru `withPalette()`.
+In addition to `palette`, all props from `<PaletteProvider>` are passed as first argument to your props factory. In the following example, we are passing `roundness` of `0.5` to `<PaletteProvider>` and it will be piped to `withPalette()`.
 
 ```jsx
 export default withPalette(({ roundness }) => ({
