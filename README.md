@@ -141,7 +141,7 @@ export default withPalette(({ palette, theme }, props) => ({
 In fact, all props from `<PaletteProvider>` are passed as first argument to your props factory. In the following example, we are passing `roundness` of `0.5` to the props factory thru `withPalette()`.
 
 ```jsx
-export default withPalette(({ roundness }, props) => ({
+export default withPalette(({ roundness }) => ({
   borderRadius: 10 * roundness
 }))(MyButton)
 ```
@@ -150,8 +150,8 @@ And in your app,
 
 ```jsx
 <PaletteProvider roundness={ 0.5 }>
-  <MyButton>
-</MyButton>
+  <MyButton>This button is round.</MyButton>
+</PaletteProvider>
 ```
 
 > Tips: You should always consult your designer before customizing any UI designs, they may have designed it intentionally. Don't over-customize!
@@ -267,9 +267,9 @@ We follow [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design
 | `chromeBlackMedium` | `rgba(0, 0, 0, .8)` | *(Same as light)* |
 | `chromeBlackHigh` | `#000` | *(Same as light)* |
 | `chromeWhite` | `#FFF` | *(Same as light)* |
-| `primaryText` | (Same as `baseHigh`) | (Same as `baseHigh`) |
-| `secondaryText` | (Same as `baseMedium`) | (Same as `baseMedium`) |
-| `disabledUI` | (Same as `baseMediumLow`) | (Same as `baseMediumLow`) |
+| `primaryText` | *(Same as `baseHigh`)* | *(Same as `baseHigh`)* |
+| `secondaryText` | *(Same as `baseMedium`)* | *(Same as `baseMedium`)* |
+| `disabledUI` | *(Same as `baseMediumLow`)* | *(Same as `baseMediumLow`)* |
 
 ### Foreground color
 
