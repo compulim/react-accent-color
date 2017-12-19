@@ -44,7 +44,7 @@ class MyButton extends React.Component {
   }
 }
 
-export default withPalette({ palette } => ({
+export default withPalette(({ palette }) => ({
   fillColor: palette.accent
 }))(MyButton)
 ```
@@ -180,7 +180,7 @@ class MyButton extends React.Component {
   }
 }
 
-export default withPalette({ palette } => ({
+export default withPalette(({ palette }) => ({
   css: createCSS(palette)
 }))(MyButton)
 ```
@@ -219,7 +219,7 @@ No worries. HOC pattern is designed to play nice with each other, like `connect(
 ```jsx
 export default connect(state => ({
   name: state.userProfile.name
-}))(withPalette({ palette } => ({
+}))(withPalette(({ palette }) => ({
   fillColor: palette.accent
 }))(MyButton))
 ```
@@ -278,7 +278,7 @@ Finding the right foreground color can be tricky because the fill color can be t
 We provide foreground colors from `palette.textOn` maps. For example, to get the foreground color for `listLow` color, you can get it from `palette.textOn.listLow`. For example,
 
 ```js
-export default withPalette({ palette } => ({
+export default withPalette(({ palette }) => ({
   fillColor: palette.listLow,
   color    : palette.textOn.listLow
 }))(MyButton)
