@@ -20,10 +20,10 @@ Do `npm install react-accent-color color --save`.
 
 Then, in your code:
 
-* [Hoist colors to props on your component using `withPalette()`](#hoist-colors-to-props-on-your-component-using-withpalette)
+* [Hoist colors to props using `withPalette()`](#hoist-colors-to-props-using-withpalette)
 * [Add `<PaletteProvider>` to the root of your app](#add-paletteprovider-to-the-root-of-your-app)
 
-### Hoist colors to props on your component using `withPalette()`
+### Hoist colors to props using `withPalette()`
 
 Like Redux `connect()`, we use [Higher-Order Components](https://reactjs.org/docs/higher-order-components.html) pattern to hoist colors to props. So you are in control of which colors should be hoisted.
 
