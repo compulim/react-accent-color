@@ -117,7 +117,7 @@ export default withPalette(({ palette }, props) => ({
 }))(MyButton)
 ```
 
-And in your app:
+And in your app,
 
 ```jsx
 <PaletteProvider accent="#0078D7" theme="light">
@@ -143,7 +143,11 @@ In fact, all props from `<PaletteProvider>` are passed as first argument to your
 export default withPalette(({ roundness }, props) => ({
   borderRadius: 10 * roundness
 }))(MyButton)
+```
 
+And in your app,
+
+```jsx
 <PaletteProvider roundness={ 0.5 }>
   <MyButton>
 </MyButton>
