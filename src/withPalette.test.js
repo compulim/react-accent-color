@@ -53,13 +53,11 @@ it('should refresh with accent color change', () => {
   expect(paletteFactory).toHaveBeenCalledTimes(1);
 
   expect(provider.find('Dummy').props()).toHaveProperty('oneTwoThree', '123');
-  expect(provider.find('Dummy').props()).toHaveProperty('accent', '#F00');
   expect(provider.find('Dummy').props()).toHaveProperty('background', '#FFF');
 
   provider.setProps({ accent: '#0F0' });
 
   expect(provider.find('Dummy').props()).toHaveProperty('oneTwoThree', '123');
-  expect(provider.find('Dummy').props()).toHaveProperty('accent', '#0F0');
   expect(provider.find('Dummy').props()).toHaveProperty('background', '#FFF');
 
   // React may call componentWillReceiveProps more than it should, so we can't say it called 2 times exactly

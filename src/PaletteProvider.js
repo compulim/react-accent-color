@@ -25,9 +25,10 @@ class Provider extends React.Component {
   }
 
   createSubjectValue(props) {
-    return Object.assign({
-      palette: this.createAndMemoizePalette(props.accent, props.theme)
-    }, mapExcept(props, ['children', 'palette']));
+    return {
+      palette: this.createAndMemoizePalette(props.accent, props.theme),
+      ...mapExcept(props, ['children'])
+    };
   }
 
   getChildContext() {

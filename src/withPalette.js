@@ -27,10 +27,10 @@ export default function withPalette(propsFactory) {
       constructor(props, context) {
         super(props, context);
 
-        const subject = context.palette && context.palette.getValue();
+        const contextValue = context.palette && context.palette.getValue();
 
         this.createAndMemoizePalette = memoize(createPalette);
-        this.state = this.createState({}, props, subject, true);
+        this.state = this.createState({}, props, contextValue, true);
       }
 
       componentWillMount() {
@@ -53,9 +53,9 @@ export default function withPalette(propsFactory) {
 
         if (shouldUpdate) {
           const { palette } = nextContext || {};
-          const subjectValue = palette && palette.getValue();
+          const contextValue = palette && palette.getValue();
 
-          this.setState(state => this.createState(state, nextProps, subjectValue, true));
+          this.setState(state => this.createState(state, nextProps, contextValue, true));
         }
       }
 
@@ -68,36 +68,35 @@ export default function withPalette(propsFactory) {
 
         const { palette } = context || {};
 
-        this.unsubscribe = palette && palette.subscribe(subjectValue => {
-          this.setState(state => this.createState(state, this.props, subjectValue));
+        this.unsubscribe = palette && palette.subscribe(contextValue => {
+          this.setState(state => this.createState(state, this.props, contextValue));
         });
       }
 
-      createState(state, props, subjectValue = {}, propsChanged = false) {
-        const accent      = props.accent || subjectValue.accent || DEFAULT_ACCENT;
-        const theme       = props.theme  || subjectValue.theme  || DEFAULT_THEME;
-        const palette     = accent === subjectValue.accent && theme === subjectValue.theme ? subjectValue.palette : this.createAndMemoizePalette(accent, theme);
-        const nextHoistedProps = Object.assign(
-          {},
-          mapExcept(subjectValue, ['palette']),
-          {
-            accent,
-            theme
-          }
-        );
-        const hoistedPropsChanged = !mapEqual(
-          mapExcept(nextHoistedProps, ['children']),
-          mapExcept(state.hoistedProps, ['children']),
-        );
+      getHoistedProps(props, contextValue = {}) {
+        const accent      = props.accent || contextValue.accent || DEFAULT_ACCENT;
+        const theme       = props.theme  || contextValue.theme  || DEFAULT_THEME;
 
-        if (propsChanged || hoistedPropsChanged) {
+        return {
+          ...mapExcept(contextValue, ['palette']),
+          accent,
+          theme
+        };
+      }
+
+      createState(state, props, contextValue = {}, propsChanged = false) {
+        const nextHoistedProps    = this.getHoistedProps(props, contextValue);
+        const { accent, theme }   = nextHoistedProps;
+        const palette             = accent === contextValue.accent && theme === contextValue.theme ? contextValue.palette : this.createAndMemoizePalette(accent, theme);
+
+        if (propsChanged || !mapEqual(nextHoistedProps, state.hoistedProps)) {
           return {
-            cssProps    : Object.assign(
-              { accent, theme },
-              propsFactory && propsFactory(
-                Object.assign({}, nextHoistedProps, { palette }),
-                props
-              )
+            cssProps: propsFactory && propsFactory(
+              {
+                ...nextHoistedProps,
+                palette
+              },
+              props
             ),
             hoistedProps: nextHoistedProps
           };
