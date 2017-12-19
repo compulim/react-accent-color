@@ -149,7 +149,7 @@ export default withPalette(({ roundness }, props) => ({
 </MyButton>
 ```
 
-> Tips: You should always consult your designer before customizing any UI design, they may have done it intentionally.
+> Tips: You should always consult your designer before customizing any UI designs, they may have designed it intentionally.
 
 ### Working with glamor
 
