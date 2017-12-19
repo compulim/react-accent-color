@@ -16,7 +16,7 @@ This library is designed to play nice with [`glamor`](https://github.com/threepo
 
 > Alternatively, you can find our demo at [react-accent-color-testbed](https://github.com/compulim/react-accent-color-testbed) repository.
 
-Do `npm install react-accent-color color --save`.
+Do `npm install react-accent-color --save`.
 
 Then, in your code:
 
@@ -232,12 +232,12 @@ We follow [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design
 
 | Color name | Light theme | Dark theme |
 | - | - | - |
-| `accentDark1` | `{ accentColor.darken(.2) }` | (Same as light) |
-| `accentDark2` | `{ accentColor.darken(.4) }` | (Same as light) |
-| `accentDark3` | `{ accentColor.darken(.6) }` | (Same as light) |
-| `accentLight1` | `{ accentColor.lighten(.2) }` | (Same as light) |
-| `accentLight2` | `{ accentColor.lighten(.4) }` | (Same as light) |
-| `accentLight3` | `{ accentColor.lighten(.6) }` | (Same as light) |
+| `accentDark1` | `{ accentColor.darken(.2) }` | *(Same as light)* |
+| `accentDark2` | `{ accentColor.darken(.4) }` | *(Same as light)* |
+| `accentDark3` | `{ accentColor.darken(.6) }` | *(Same as light)* |
+| `accentLight1` | `{ accentColor.lighten(.2) }` | *(Same as light)* |
+| `accentLight2` | `{ accentColor.lighten(.4) }` | *(Same as light)* |
+| `accentLight3` | `{ accentColor.lighten(.6) }` | *(Same as light)* |
 | `background` | `#FFF` | `#000` |
 | `foreground` | `#000` | `#FFF` |
 | `baseLow` | `rgba(0, 0, 0, .2)` | `rgba(255, 255, 255, .2)` |
@@ -252,9 +252,9 @@ We follow [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design
 | `altHigh` | `#FFF` | `#000` |
 | `listLow` | `rgba(0, 0, 0, .1)` | `rgba(255, 255, 255, .1)` |
 | `listMedium` | `rgba(0, 0, 0, .2)` | `rgba(255, 255, 255, .2)` |
-| `listAccentLow` | `{ accentColor.fade(.4) }` | (Same as light) |
-| `listAccentMedium` | `{ accentColor.fade(.6) }` | (Same as light) |
-| `listAccentHigh` | `{ accentColor.fade(.7) }` | (Same as light) |
+| `listAccentLow` | `{ accentColor.fade(.4) }` | *(Same as light)* |
+| `listAccentMedium` | `{ accentColor.fade(.6) }` | *(Same as light)* |
+| `listAccentHigh` | `{ accentColor.fade(.7) }` | *(Same as light)* |
 | `chromeLow` | `#F2F2F2` | `#171717` |
 | `chromeMediumLow` | `#F2F2F2` | `#2B2B2B` |
 | `chromeMedium` | `#E6E6E6` | `#1F1F1F` |
@@ -262,11 +262,11 @@ We follow [UWP color design](https://docs.microsoft.com/en-us/windows/uwp/design
 | `chromeAltLow` | `#171717` | `#F2F2F2` |
 | `chromeDisabledLow` | `#7A7A7A` | `#858585` |
 | `chromeDisabledHigh` | `#CCC` | `#333` |
-| `chromeBlackLow` | `rgba(0, 0, 0, .2)` | (Same as light) |
-| `chromeBlackMediumLow` | `rgba(0, 0, 0, .4)` | (Same as light) |
-| `chromeBlackMedium` | `rgba(0, 0, 0, .8)` | (Same as light) |
-| `chromeBlackHigh` | `#000` | (Same as light) |
-| `chromeWhite` | `#FFF` | (Same as light) |
+| `chromeBlackLow` | `rgba(0, 0, 0, .2)` | *(Same as light)* |
+| `chromeBlackMediumLow` | `rgba(0, 0, 0, .4)` | *(Same as light)* |
+| `chromeBlackMedium` | `rgba(0, 0, 0, .8)` | *(Same as light)* |
+| `chromeBlackHigh` | `#000` | *(Same as light)* |
+| `chromeWhite` | `#FFF` | *(Same as light)* |
 | `primaryText` | (Same as `baseHigh`) | (Same as `baseHigh`) |
 | `secondaryText` | (Same as `baseMedium`) | (Same as `baseMedium`) |
 | `disabledUI` | (Same as `baseMediumLow`) | (Same as `baseMediumLow`) |

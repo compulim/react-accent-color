@@ -4,8 +4,10 @@ import React         from 'react';
 import arrayEqual      from './arrayEqual';
 import createPalette   from './createPalette';
 import mapEqual        from './mapEqual';
+import mapExcept       from './mapExcept';
 import memoize         from './memoize';
 import PaletteProvider from './PaletteProvider';
+import Subject         from './Subject';
 
 const DEFAULT_ACCENT = '#0078D7';
 const DEFAULT_THEME  = 'light';
@@ -17,16 +19,6 @@ function propsEqual(x, y) {
     arrayEqual(keys, Object.keys(y))
     && keys.every(key, x[key] === y[key])
   );
-}
-
-function mapExcept(map = {}, keys) {
-  return Object.keys(map).reduce((nextMap, key) => {
-    if (!keys.includes(key)) {
-      nextMap[key] = map[key];
-    }
-
-    return nextMap;
-  }, {});
 }
 
 export default function withPalette(propsFactory) {
@@ -59,17 +51,26 @@ export default function withPalette(propsFactory) {
           shouldUpdate = 1;
         }
 
-        shouldUpdate && this.setState(state => this.createState(state, nextProps, nextContext.palette && nextContext.palette.getValue(), true));
+        if (shouldUpdate) {
+          const { palette } = nextContext || {};
+          const subjectValue = palette && palette.getValue();
+
+          this.setState(state => this.createState(state, nextProps, subjectValue, true));
+        }
+      }
+
+      componentWillUnmount() {
+        this.subscribePalette();
       }
 
       subscribePalette(context) {
         this.unsubscribe && this.unsubscribe();
 
-        if (context.palette) {
-          this.unsubscribe = context.palette.subscribe(subjectValue => {
-            this.setState(state => this.createState(state, this.props, subjectValue));
-          });
-        }
+        const { palette } = context || {};
+
+        this.unsubscribe = palette && palette.subscribe(subjectValue => {
+          this.setState(state => this.createState(state, this.props, subjectValue));
+        });
       }
 
       createState(state, props, subjectValue = {}, propsChanged = false) {
@@ -78,21 +79,26 @@ export default function withPalette(propsFactory) {
         const palette     = accent === subjectValue.accent && theme === subjectValue.theme ? subjectValue.palette : this.createAndMemoizePalette(accent, theme);
         const nextHoistedProps = Object.assign(
           {},
-          subjectValue,
+          mapExcept(subjectValue, ['palette']),
           {
             accent,
-            palette,
             theme
           }
         );
         const hoistedPropsChanged = !mapEqual(
-          mapExcept(nextHoistedProps, ['children', 'palette']),
-          mapExcept(state.hoistedProps, ['children', 'palette']),
+          mapExcept(nextHoistedProps, ['children']),
+          mapExcept(state.hoistedProps, ['children']),
         );
 
         if (propsChanged || hoistedPropsChanged) {
           return {
-            cssProps    : Object.assign({ accent, theme }, propsFactory && propsFactory(nextHoistedProps, props)),
+            cssProps    : Object.assign(
+              { accent, theme },
+              propsFactory && propsFactory(
+                Object.assign({}, nextHoistedProps, { palette }),
+                props
+              )
+            ),
             hoistedProps: nextHoistedProps
           };
         }
@@ -108,7 +114,10 @@ export default function withPalette(propsFactory) {
       }
     };
 
-    WithPalette.contextTypes = PaletteProvider.childContextTypes;
+    WithPalette.contextTypes = {
+      palette: PropTypes.instanceOf(Subject)
+    };
+
     WithPalette.displayName = `withPalette(${ WrappedComponent.displayName || WrappedComponent.name })`;
     WithPalette.propTypes = {
       accent: PropTypes.string,

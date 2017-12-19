@@ -26,12 +26,12 @@ it('should wrap component with CSS factories', () => {
     </PaletteProvider>
   );
 
-  expect(provider.find('Dummy').props().oneTwoThree).toBe('123');
-  expect(provider.find('Dummy').props().fourFiveSix).toBe('456');
-  expect(provider.find('Dummy').props().accent).toBe('#F00');
-  expect(provider.find('Dummy').props().background).toBe('#FFF');
-  expect(provider.find('Dummy').props().theme).toBe('light');
-  expect(provider.find('Dummy').props().hoistedFourFiveSix).toBe('456');
+  expect(provider.find('Dummy').props()).toHaveProperty('oneTwoThree', '123');
+  expect(provider.find('Dummy').props()).toHaveProperty('fourFiveSix', '456');
+  expect(provider.find('Dummy').props()).toHaveProperty('accent', '#F00');
+  expect(provider.find('Dummy').props()).toHaveProperty('background', '#FFF');
+  expect(provider.find('Dummy').props()).toHaveProperty('theme', 'light');
+  expect(provider.find('Dummy').props()).toHaveProperty('hoistedFourFiveSix', '456');
 });
 
 it('should refresh with accent color change', () => {
@@ -52,15 +52,15 @@ it('should refresh with accent color change', () => {
 
   expect(paletteFactory).toHaveBeenCalledTimes(1);
 
-  expect(provider.find('Dummy').props().oneTwoThree).toBe('123');
-  expect(provider.find('Dummy').props().accent).toBe('#F00');
-  expect(provider.find('Dummy').props().background).toBe('#FFF');
+  expect(provider.find('Dummy').props()).toHaveProperty('oneTwoThree', '123');
+  expect(provider.find('Dummy').props()).toHaveProperty('accent', '#F00');
+  expect(provider.find('Dummy').props()).toHaveProperty('background', '#FFF');
 
   provider.setProps({ accent: '#0F0' });
 
-  expect(provider.find('Dummy').props().oneTwoThree).toBe('123');
-  expect(provider.find('Dummy').props().accent).toBe('#0F0');
-  expect(provider.find('Dummy').props().background).toBe('#FFF');
+  expect(provider.find('Dummy').props()).toHaveProperty('oneTwoThree', '123');
+  expect(provider.find('Dummy').props()).toHaveProperty('accent', '#0F0');
+  expect(provider.find('Dummy').props()).toHaveProperty('background', '#FFF');
 
   // React may call componentWillReceiveProps more than it should, so we can't say it called 2 times exactly
   expect(paletteFactory).toHaveBeenCalledTimes(2);
@@ -112,9 +112,9 @@ it('should override palette with accent props', () => {
   );
 
   expect(provider.getDOMNode()).toMatchSnapshot();
-  expect(provider.find('Dummy').props().accent).toBe('#999');
-  expect(provider.find('Dummy').props().background).toBe('#000');
-  expect(provider.find('Dummy').props().theme).toBe('dark');
+  expect(provider.find('Dummy').props()).toHaveProperty('accent', '#999');
+  expect(provider.find('Dummy').props()).toHaveProperty('background', '#000');
+  expect(provider.find('Dummy').props()).toHaveProperty('theme', 'dark');
 
   provider.setProps({ accent: '#FFF' });
 
@@ -128,9 +128,9 @@ it('should override palette with accent props', () => {
   provider.setProps({ theme: 'light' });
 
   expect(paletteFactory).toHaveBeenCalledTimes(3);
-  expect(provider.find('Dummy').props().accent).toBe('#999');
-  expect(provider.find('Dummy').props().background).toBe('#FFF');
-  expect(provider.find('Dummy').props().theme).toBe('light');
+  expect(provider.find('Dummy').props()).toHaveProperty('accent', '#999');
+  expect(provider.find('Dummy').props()).toHaveProperty('background', '#FFF');
+  expect(provider.find('Dummy').props()).toHaveProperty('theme', 'light');
 });
 
 it('should recalculate palette on props change', () => {
@@ -146,12 +146,12 @@ it('should recalculate palette on props change', () => {
   const wrappedDummy = mount(<WrappedDummy accent="#999" />);
 
   expect(paletteFactory).toHaveBeenCalledTimes(1);
-  expect(wrappedDummy.find('Dummy').props().myAccent).toBe('#999');
+  expect(wrappedDummy.find('Dummy').props()).toHaveProperty('myAccent', '#999');
 
   wrappedDummy.setProps({ dummy: 123 });
 
   expect(paletteFactory).toHaveBeenCalledTimes(2);
-  expect(wrappedDummy.find('Dummy').props().myAccent).toBe('#999123');
+  expect(wrappedDummy.find('Dummy').props()).toHaveProperty('myAccent', '#999123');
 });
 
 it('should work without <PaletteProvider>', () => {
@@ -166,12 +166,12 @@ it('should work without <PaletteProvider>', () => {
     <WrappedDummy accent="#F00" theme="dark" oneTwoThree="123" fourFiveSix="456" />
   );
 
-  expect(wrappedDummy.find('Dummy').props().oneTwoThree).toBe('123');
-  expect(wrappedDummy.find('Dummy').props().fourFiveSix).toBe('456');
-  expect(wrappedDummy.find('Dummy').props().accent).toBe('#F00');
-  expect(wrappedDummy.find('Dummy').props().background).toBe('#000');
-  expect(wrappedDummy.find('Dummy').props().theme).toBe('dark');
-  expect(wrappedDummy.find('Dummy').props().hoistedFourFiveSix).toBe('456');
+  expect(wrappedDummy.find('Dummy').props()).toHaveProperty('oneTwoThree', '123');
+  expect(wrappedDummy.find('Dummy').props()).toHaveProperty('fourFiveSix', '456');
+  expect(wrappedDummy.find('Dummy').props()).toHaveProperty('accent', '#F00');
+  expect(wrappedDummy.find('Dummy').props()).toHaveProperty('background', '#000');
+  expect(wrappedDummy.find('Dummy').props()).toHaveProperty('theme', 'dark');
+  expect(wrappedDummy.find('Dummy').props()).toHaveProperty('hoistedFourFiveSix', '456');
 });
 
 it('should hoist all props from <PaletteProvider>', () => {
@@ -186,5 +186,41 @@ it('should hoist all props from <PaletteProvider>', () => {
   );
 
   expect(provider.find('Dummy').props().oneTwoThree).toBeUndefined();
-  expect(provider.find('Dummy').props().hoistedOneTwoThree).toBe(123);
+  expect(provider.find('Dummy').props()).toHaveProperty('hoistedOneTwoThree', 123);
+});
+
+it('should stack multiple <PaletteProvider>', () => {
+  const propFactory = jest.fn();
+  const WrappedDummy = withPalette(({
+    accent,
+    fourFiveSix,
+    oneTwoThree,
+    palette,
+    theme
+  }, props) => {
+    propFactory();
+
+    return {
+      accent,
+      background: palette.background,
+      oneTwoThree,
+      fourFiveSix,
+      theme
+    };
+  })(Dummy);
+
+  const provider = mount(
+    <PaletteProvider accent="#F00" theme="dark" oneTwoThree={ 123 }>
+      <PaletteProvider accent="#0F0" fourFiveSix={ 456 } debug={ true }>
+        <WrappedDummy />
+      </PaletteProvider>
+    </PaletteProvider>
+  );
+
+  expect(provider.find('Dummy').props()).toHaveProperty('accent', '#0F0');
+  expect(provider.find('Dummy').props()).toHaveProperty('background', '#000');
+  expect(provider.find('Dummy').props()).toHaveProperty('theme', 'dark');
+  expect(provider.find('Dummy').props()).toHaveProperty('oneTwoThree', 123);
+  expect(provider.find('Dummy').props()).toHaveProperty('fourFiveSix', 456);
+  expect(propFactory).toHaveBeenCalledTimes(1);
 });
