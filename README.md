@@ -191,14 +191,14 @@ export default withPalette({ palette } => ({
 
 The factory function passed to `withPalette` will be called when:
 
-* `MyButton.props` has changed
-* `PaletteProvider.accent`/`theme` has changed
+* Any props on `<PaletteProvider>` has changed
+* Any props on your component has changed
 
 This could means, every time a prop on `MyButton` has changed, we will call `glamor.css()`. If the props are updated but not leading to any visible change, it could be saved to improve performance.
 
 You can use a memoizer to call `css()` only when there are "meaningful" changes, i.e. changes that would lead to style update. In the following example, `css()` will only be called when either `palette.accent` or `props.opacity` has changed.
 
-> For your convenience, you exported our shallow memoizer with FIFO=1, inspired by [`reselect`](https://github.com/reactjs/reselect).
+> For your convenience, we exported our shallow memoizer with FIFO = 1, inspired by [`reselect`](https://github.com/reactjs/reselect).
 
 ```jsx
 import { memoize } from 'react-accent-color';
