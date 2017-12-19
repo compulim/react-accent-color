@@ -11,25 +11,22 @@ export default class Palette extends React.Component {
     super(props, context);
 
     this.state = {
-      palette: new Subject({
-        accent : props.accent,
-        palette: createPalette(props.accent, props.theme),
-        theme  : props.theme
-      })
+      palette: new Subject(Object.assign(
+        {
+          palette: createPalette(props.accent, props.theme),
+        },
+        props
+      ))
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.accent !== this.props.accent
-      || nextProps.theme !== this.props.theme
-    ) {
-      this.state.palette.next({
-        accent : nextProps.accent,
+    this.state.palette.next(Object.assign(
+      {
         palette: createPalette(nextProps.accent, nextProps.theme),
-        theme  : nextProps.theme
-      });
-    }
+      },
+      nextProps
+    ));
   }
 
   getChildContext() {

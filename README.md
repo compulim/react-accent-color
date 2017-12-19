@@ -83,6 +83,7 @@ Now you can start using accent colors in your app and components. There are few 
 * [Overriding color for some components](#overriding-color-for-some-components)
 * [Mixing colors with props](#mixing-colors-with-props)
 * [Creating your color based on theme](#creating-your-color-based-on-theme)
+  * [Non-color customization](#non-color-customization)
 * [Working with `glamor`](#working-with-glamor)
 * [My component has already `connect`-ed with Redux](#my-component-has-already-connect-ed-with-redux)
 
@@ -129,10 +130,28 @@ And in your app:
 In addition to the color palette, you can also create your own colors using `theme` from `<PaletteProvider>`.
 
 ```jsx
-export defasult withPalette(({ palette, theme }, props) => ({
+export default withPalette(({ palette, theme }, props) => ({
   fillColor: theme === 'light' ? palette.accentDark1 : palette.accentLight1
 }))(MyButton)
 ```
+
+#### Non-color customization
+
+In fact, all props from `<PaletteProvider>` are passed as first argument to your props factory, which is called by `withPalette`.
+
+In the following example, we are passing `roundness` of `0.5` as a props to the props factory thru `withPalette()`.
+
+```jsx
+export default withPalette(({ roundness }, props) => ({
+  borderRadius: 10 * roundness
+}))(MyButton)
+
+<PaletteProvider roundness={ 0.5 }>
+  <MyButton>
+</MyButton>
+```
+
+> Tips: You should always consult your designer before customizing any UI design, they may have done it intentionally.
 
 ### Working with glamor
 

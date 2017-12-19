@@ -36,11 +36,11 @@ it('should wrap component with CSS factories', () => {
 
 it('should refresh with accent color change', () => {
   const paletteFactory = jest.fn();
-  const WrappedDummy = withPalette((palette, props) => {
+  const WrappedDummy = withPalette(({ palette }, props) => {
     paletteFactory();
 
     return {
-      myAccent: palette.accent
+      background: palette.background
     };
   })(Dummy);
 
@@ -52,10 +52,15 @@ it('should refresh with accent color change', () => {
 
   expect(paletteFactory).toHaveBeenCalledTimes(1);
 
+  expect(provider.find('Dummy').props().oneTwoThree).toBe('123');
+  expect(provider.find('Dummy').props().accent).toBe('#F00');
+  expect(provider.find('Dummy').props().background).toBe('#FFF');
+
   provider.setProps({ accent: '#0F0' });
 
   expect(provider.find('Dummy').props().oneTwoThree).toBe('123');
-  expect(provider.find('Dummy').props().myAccent).toBe('#0F0');
+  expect(provider.find('Dummy').props().accent).toBe('#0F0');
+  expect(provider.find('Dummy').props().background).toBe('#FFF');
 
   // React may call componentWillReceiveProps more than it should, so we can't say it called 2 times exactly
   expect(paletteFactory).toHaveBeenCalledTimes(2);
@@ -81,6 +86,11 @@ it('should not refresh with no color change', () => {
 
   // We should not call paletteFactory if there is nothing actually changed
   expect(paletteFactory).toHaveBeenCalledTimes(1);
+
+  provider.setProps({ dummy: '123' });
+
+  // We added a dummy prop to <PaletteProvider>, we should let paletteFactory know about it
+  expect(paletteFactory).toHaveBeenCalledTimes(2);
 });
 
 it('should override palette with accent props', () => {
@@ -113,12 +123,11 @@ it('should override palette with accent props', () => {
 
   provider.setProps({ dummy: '123' });
 
-  // Changing any unrelated provider.props should not trigger any update
-  expect(paletteFactory).toHaveBeenCalledTimes(1);
+  expect(paletteFactory).toHaveBeenCalledTimes(2);
 
   provider.setProps({ theme: 'light' });
 
-  expect(paletteFactory).toHaveBeenCalledTimes(2);
+  expect(paletteFactory).toHaveBeenCalledTimes(3);
   expect(provider.find('Dummy').props().accent).toBe('#999');
   expect(provider.find('Dummy').props().background).toBe('#FFF');
   expect(provider.find('Dummy').props().theme).toBe('light');
@@ -163,4 +172,19 @@ it('should work without <PaletteProvider>', () => {
   expect(wrappedDummy.find('Dummy').props().background).toBe('#000');
   expect(wrappedDummy.find('Dummy').props().theme).toBe('dark');
   expect(wrappedDummy.find('Dummy').props().hoistedFourFiveSix).toBe('456');
+});
+
+it('should hoist all props from <PaletteProvider>', () => {
+  const WrappedDummy = withPalette(({ oneTwoThree }, props) => ({
+    hoistedOneTwoThree: oneTwoThree
+  }))(Dummy);
+
+  const provider = mount(
+    <PaletteProvider accent="#F00" theme="light" oneTwoThree={ 123 }>
+      <WrappedDummy />
+    </PaletteProvider>
+  );
+
+  expect(provider.find('Dummy').props().oneTwoThree).toBeUndefined();
+  expect(provider.find('Dummy').props().hoistedOneTwoThree).toBe(123);
 });
