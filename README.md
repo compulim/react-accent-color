@@ -85,13 +85,14 @@ Now you can start using accent colors in your app and components. There are few 
 * [Creating your color based on theme](#creating-your-color-based-on-theme)
   * [Non-color customization](#non-color-customization)
 * [Working with `glamor`](#working-with-glamor)
+  * [Making it render fast with `glamor`](#making-it-render-fast-with-glamor)
 * [My component has already `connect`-ed with Redux](#my-component-has-already-connect-ed-with-redux)
 
 ### Overriding color for some components
 
 If you provide `accent` or `theme` props to the hoisted component, you can override the accent color provided from `<PaletteProvider>`.
 
-The following example added `accent="#E81123"` to `<MyButton>` will fill it red.
+The following example added `accent="#E81123"` to `<MyButton>` and will fill it red.
 
 ```jsx
 <PaletteProvider accent="#0078D7" theme="light">
@@ -137,7 +138,7 @@ export default withPalette(({ palette, theme }, props) => ({
 
 #### Non-color customization
 
-In fact, all props from `<PaletteProvider>` are passed as first argument to your props factory. In the following example, we are passing `roundness` of `0.5` as a props to the props factory thru `withPalette()`.
+In fact, all props from `<PaletteProvider>` are passed as first argument to your props factory. In the following example, we are passing `roundness` of `0.5` to the props factory thru `withPalette()`.
 
 ```jsx
 export default withPalette(({ roundness }, props) => ({
@@ -153,7 +154,7 @@ And in your app,
 </MyButton>
 ```
 
-> Tips: You should always consult your designer before customizing any UI designs, they may have designed it intentionally.
+> Tips: You should always consult your designer before customizing any UI designs, they may have designed it intentionally. Don't over-customize!
 
 ### Working with glamor
 
@@ -184,9 +185,9 @@ export default withPalette({ palette } => ({
 }))(MyButton)
 ```
 
-#### Performance with `glamor`
+#### Making it render fast with `glamor`
 
-For performance reason, we recommend to call `glamor`'s `css()` outside of `render()`.
+> Tips: `glamor.css()` calls should be done outside of `render()` and avoid calling it more than you need.
 
 The factory function passed to `withPalette` will be called when:
 
